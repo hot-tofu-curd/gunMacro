@@ -1,5 +1,5 @@
 local a = 0
-local gunY = 3; -- Y轴参数
+local gunY = 6; -- Y轴参数
 local gunX = 0; -- X轴参数
 local runningtime = 0; -- 脚本运行时间
 EnablePrimaryMouseButtonEvents(true);
@@ -23,8 +23,6 @@ function OnEvent(event, arg)
         end
         OutputLogMessage("gunY:%s,gunX:%s ", gunY, gunX)
         OutputLogMessage("\n")
-        weapon1aa = math.floor(gunY);
-        weapon1ba = math.floor(gunX);
     end
 
     if (event == "MOUSE_BUTTON_PRESSED" and arg == 5) then -- 宏开关
@@ -46,20 +44,26 @@ function OnEvent(event, arg)
             if (a == 0) and mode == 0 then
 
                 Sleep(30)
-                -- MoveMouseRelative(0, 2 * weapon1a)
+                MoveMouseRelative(0, gunY)
                 repeat
+
                     Y1 = math.floor(gunY / 2);
                     X1 = gunX - 1;
                     Y2 = gunY - Y1;
                     X2 = gunX + 1;
+                    if GetRunningTime() - runningtime > 640 then -- 第二段压枪
+                        Y1 = 1;
+                        Y2 = 0;
+                        OutputLogMessage("secend|")
+                    end
 
-                    Sleep(15)
+                    Sleep(30)
                     MoveMouseRelative(-1, Y1) -- Y轴移动  -1，1
-                    OutputLogMessage("X:%s,Y:%s\n", X1, Y1) -- 3,0
+                    OutputLogMessage("X:%s,Y:%s ", X1, Y1) -- 3,0
 
-                    Sleep(15)
+                    Sleep(30)
                     MoveMouseRelative(X2, Y2) -- X轴移动   1，2
-                    OutputLogMessage("X:%s,Y:%s\n\n", X2, Y2) -- 2,0
+                    OutputLogMessage("X:%s,Y:%s\n", X2, Y2) -- 2,0
 
                     X1 = 0;
                     Y1 = 0;
